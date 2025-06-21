@@ -1,18 +1,21 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-  <div class="main">
-    <div class="container">
-      <div class="heading">
-        <div>To-Do List</div>
-      </div>
-      <div class="todo"></div>
-    </div>
-  </div>
+  <To_Do/>
 </template>
 
-<style scoped>
+<script lang="ts">
+import To_Do from "@/components/To_Do .vue";
 
+export default {
+  components: {
+    To_Do,
+
+  }
+}
+</script>
+
+<style>
+*{
+  margin: 0;
+  padding: 0;
+}
 </style>
