@@ -1,64 +1,103 @@
 <template>
   <div>
-    <h1>To-Do</h1>
-    <input v-model="newTodo" placeholder="Add task" @keyup.enter="addTodo()"/>
-    <button @click="addTodo()">+</button>
+    <div class="mainTodo">
+  <h1>Todo app</h1>
 
-    <ul>
-      <li v-for="(todo,index) in todos" :key="todo.id">
-              <span :class="{completed: todo.completed}">{{todo.id}}</span>
-              <span :class="{completed: todo.completed}">{{todo.text}}</span>
-              <button @click="deleteTodo(index)">del</button>
-      </li>
-    </ul>
+      <div class="inputTodo">
+  <input v-model="newTodo" placeholder="Add tasks" @keyup.enter="addTodo()" />
+  <button @click="addTodo()" >Add</button>
+      </div>
+      <div class="Listcontainer" >
+  <ul>
+    <li v-for="(todo, index) in todos" :key="todo.id">
+    <span :class="{completed: todo.completed}">{{todo.text}}</span>
+    <span :class="{completed: todo.completed}">{{todo.id}}</span>
+    <button @click="removeTodo(index)" id="del"> &#10008;</button>
+    </li>
+  </ul>
+    </div>
+    </div>
   </div>
 </template>
 
-
-<script lang="ts" setup>
+<script setup lang="ts">
 import {ref} from 'vue'
 
-interface ITodo {
-  text: string
-  id: number
-  completed: boolean
+interface ITodo{
+  id:number,
+  text:string,
+  completed:boolean
 }
+const newTodo=ref<string>('')
 
-const newTodo = ref<string>()
+const todos=ref<ITodo[]>([])
 
-const todos = ref<ITodo[]>([])
-let newId = 0
+let newId= 0
 
-
-
-
-function addTodo() {
-  if (!newTodo.value) {
+function addTodo(){
+  if (!newTodo.value){
     return;
   }
-
   todos.value.push({
-    completed: false,
-    text: newTodo.value,
+    text:newTodo.value,
+    completed:false,
     id:newId++
   });
-  newTodo.value = '';
 }
-function deleteTodo(index: number) {
+newTodo.value='';
+
+function removeTodo(index: number){
   todos.value.splice(index,1)
+
 }
+
 
 
 </script>
 
 <style>
-.completed {
+.completed{
   text-decoration: line-through;
-  color: gray;
+  color: grey;
 }
+li{
+  list-style: none;
+}
+*{
+  background:linear-gradient(#242124,#5A4FCF);
+  background-size:cover;
+  margin:0 ;
+  padding:0;
+}
+.mainTodo{
+  height: 100vh;
+  width: 50vh;
+  justify-items: center;
+  color: white;
+  background: transparent;
+  margin: 10vh 50vh;
+}
+.inputTodo{
+  height: 28px;
+  border-radius: 10px;
+  padding: 5px 5px ;
+  justify-content: space-between;
+}
+input{
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1.5vw;
+  padding: 5px 5px ;
 
-li {
-  color: gray;
-  list-style-type: none;
+}
+button{
+  border: none;
+  outline: none;
+  background: coral;
+  font-size: 1.5vw;
+  cursor: pointer;
+  padding: 2px 2px;
+  border-radius: 10px;
 }
 </style>
